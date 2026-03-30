@@ -17,6 +17,7 @@ export const formatShopifyProduct = (node: any) => {
     category: node.productType || "Lifestyle",
     tags: node.tags || [],
     variantId,
+    createdAt: node.createdAt || "",
   };
 };
 
@@ -53,6 +54,7 @@ export const getProducts = async ({ limit = 10, fetchAll = false }: { limit?: nu
             }
             productType
             tags
+            createdAt
           }
         }
       }
@@ -166,6 +168,7 @@ export const getCollectionProducts = async (handle: string, limit = 10, fetchAll
               }
               productType
               tags
+              createdAt
             }
           }
         }
@@ -173,17 +176,21 @@ export const getCollectionProducts = async (handle: string, limit = 10, fetchAll
     }
   `;
 
-  let allProducts: any[] = [];
+  let activeProducts: any[] = [];
   let collectionTitle = "";
   let collectionDesc = "";
-  let hasNextPage = true;
-  let cursor = null;
+  let currentCursor: string | null = null;
+  let hasMore = true;
 
   try {
-    while (hasNextPage) {
+    // Paginate through the collection (newest first = default sort),
+    // skipping DRAFT products until we have enough ACTIVE ones
+    const needed = fetchAll ? Infinity : limit;
+
+    while (activeProducts.length < needed && hasMore) {
       const fetchResult: any = await shopifyFetch<any>({
         query,
-        variables: { handle, first: fetchAll ? 250 : limit, after: cursor },
+        variables: { handle, first: 250, after: currentCursor },
       });
       const responseBody = fetchResult.body;
 
@@ -192,18 +199,16 @@ export const getCollectionProducts = async (handle: string, limit = 10, fetchAll
       collectionTitle = responseBody.data.collectionByHandle.title;
       collectionDesc = responseBody.data.collectionByHandle.descriptionHtml;
 
-      const pageProducts = responseBody.data.collectionByHandle.products.edges;
-      allProducts = [...allProducts, ...pageProducts];
+      const edges = responseBody.data.collectionByHandle.products.edges;
+      const activeFromBatch = edges.filter(({ node }: any) => node.status === "ACTIVE");
+      activeProducts.push(...activeFromBatch);
 
-      if (fetchAll && responseBody.data.collectionByHandle.products.pageInfo.hasNextPage) {
-        cursor = responseBody.data.collectionByHandle.products.pageInfo.endCursor;
-      } else {
-        hasNextPage = false;
-      }
+      hasMore = responseBody.data.collectionByHandle.products.pageInfo.hasNextPage;
+      currentCursor = responseBody.data.collectionByHandle.products.pageInfo.endCursor;
     }
 
-    const products = allProducts
-      .filter(({ node }: any) => node.status === "ACTIVE")
+    const products = activeProducts
+      .slice(0, fetchAll ? undefined : limit)
       .map(({ node }: any) => formatShopifyProduct(node));
 
     return {
@@ -227,7 +232,7 @@ export const getProductsPage = async (limit = 30, cursor: string | null = null) 
         }
         edges {
           node {
-            id title handle status descriptionHtml productType tags
+            id title handle status descriptionHtml productType tags createdAt
             variants(first: 1) { edges { node { id price } } }
             images(first: 1) { edges { node { url altText } } }
           }
@@ -257,7 +262,7 @@ export const searchProductsPage = async (searchQuery: string, limit = 30, cursor
         }
         edges {
           node {
-            id title handle status descriptionHtml productType tags
+            id title handle status descriptionHtml productType tags createdAt
             variants(first: 1) { edges { node { id price } } }
             images(first: 1) { edges { node { url altText } } }
           }
@@ -291,7 +296,7 @@ export const getCollectionProductsPage = async (handle: string, limit = 30, curs
           }
           edges {
             node {
-              id title handle status descriptionHtml productType tags
+              id title handle status descriptionHtml productType tags createdAt
               variants(first: 1) { edges { node { id price } } }
               images(first: 1) { edges { node { url altText } } }
             }
@@ -301,14 +306,50 @@ export const getCollectionProductsPage = async (handle: string, limit = 30, curs
     }
   `;
   try {
-    const { body } = await shopifyFetch<any>({ query, variables: { handle, first: limit, after: cursor } });
-    if (!body?.data?.collectionByHandle?.products) return { products: [], pageInfo: { hasNextPage: false, endCursor: null } };
-    const validEdges = body.data.collectionByHandle.products.edges.filter(({ node }: any) => node.status === 'ACTIVE');
+    let activeProducts: any[] = [];
+    let currentCursor = cursor;
+    let hasMore = true;
+    let title = "";
+    let description = "";
+
+    // Paginate through the collection (newest first = default sort),
+    // skipping DRAFT products until we have enough ACTIVE ones
+    while (activeProducts.length < limit && hasMore) {
+      const { body } = await shopifyFetch<any>({
+        query,
+        variables: { handle, first: 250, after: currentCursor }
+      });
+
+      if (!body?.data?.collectionByHandle?.products) {
+        if (activeProducts.length === 0) {
+          return { products: [], pageInfo: { hasNextPage: false, endCursor: null } };
+        }
+        break;
+      }
+
+      title = body.data.collectionByHandle.title;
+      description = body.data.collectionByHandle.descriptionHtml;
+
+      const edges = body.data.collectionByHandle.products.edges;
+      const activeFromBatch = edges.filter(({ node }: any) => node.status === 'ACTIVE');
+      activeProducts.push(...activeFromBatch);
+
+      hasMore = body.data.collectionByHandle.products.pageInfo.hasNextPage;
+      currentCursor = body.data.collectionByHandle.products.pageInfo.endCursor;
+    }
+
+    const products = activeProducts
+      .slice(0, limit)
+      .map(({ node }: any) => formatShopifyProduct(node));
+
     return {
-      title: body.data.collectionByHandle.title,
-      description: body.data.collectionByHandle.descriptionHtml,
-      products: validEdges.map(({ node }: any) => formatShopifyProduct(node)),
-      pageInfo: body.data.collectionByHandle.products.pageInfo
+      title,
+      description,
+      products,
+      pageInfo: {
+        hasNextPage: activeProducts.length > limit || hasMore,
+        endCursor: currentCursor
+      }
     };
   } catch (err) {
     return { title: "", description: "", products: [], pageInfo: { hasNextPage: false, endCursor: null } };

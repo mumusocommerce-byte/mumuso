@@ -18,7 +18,8 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { SlidersHorizontal, X } from "lucide-react"
+import { Skeleton } from "@/components/ui/skeleton"
+import { SlidersHorizontal, X, Loader2 } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 
 import { fetchMoreCatalogProductsAction, fetchMoreCollectionProductsAction, fetchMoreSearchProductsAction } from "@/app/actions/shopify"
@@ -114,6 +115,12 @@ function CollectionLayoutInner({ initialProducts, initialPageInfo, collectionHan
         }
 
         switch (sortBy) {
+            case "date-desc":
+                result.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
+                break
+            case "date-asc":
+                result.sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime())
+                break
             case "price-asc":
                 result.sort((a, b) => Number(a.price.amount) - Number(b.price.amount))
                 break
@@ -240,6 +247,8 @@ function CollectionLayoutInner({ initialProducts, initialPageInfo, collectionHan
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="featured">Featured</SelectItem>
+                                <SelectItem value="date-desc">Date, new to old</SelectItem>
+                                <SelectItem value="date-asc">Date, old to new</SelectItem>
                                 <SelectItem value="name-asc">Alphabetically, A-Z</SelectItem>
                                 <SelectItem value="name-desc">Alphabetically, Z-A</SelectItem>
                                 <SelectItem value="price-asc">Price, low to high</SelectItem>
@@ -297,15 +306,34 @@ function CollectionLayoutInner({ initialProducts, initialPageInfo, collectionHan
                         </div>
 
                         {pageInfo?.hasNextPage && (
-                            <div className="flex justify-center mt-8">
-                                <Button
-                                    variant="outline"
-                                    size="lg"
-                                    onClick={handleLoadMore}
-                                    disabled={isLoadingMore}
-                                >
-                                    {isLoadingMore ? "Loading..." : "Load More Products"}
-                                </Button>
+                            <div className="flex flex-col items-center gap-6 mt-8">
+                                {isLoadingMore ? (
+                                    <>
+                                        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10 sm:gap-x-6 sm:gap-y-12 w-full">
+                                            {Array.from({ length: 4 }).map((_, i) => (
+                                                <div key={i} className="flex flex-col h-full">
+                                                    <Skeleton className="aspect-square rounded-lg mb-3" />
+                                                    <Skeleton className="h-3 w-20 mb-2" />
+                                                    <Skeleton className="h-4 w-full mb-1" />
+                                                    <Skeleton className="h-4 w-3/4 mb-2" />
+                                                    <Skeleton className="h-4 w-16" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                            Loading more products...
+                                        </div>
+                                    </>
+                                ) : (
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        onClick={handleLoadMore}
+                                    >
+                                        Load More Products
+                                    </Button>
+                                )}
                             </div>
                         )}
                     </>
@@ -317,7 +345,34 @@ function CollectionLayoutInner({ initialProducts, initialPageInfo, collectionHan
 
 export function CollectionLayout(props: CollectionLayoutProps) {
     return (
-        <React.Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Loading catalog...</div>}>
+        <React.Suspense fallback={
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                <aside className="hidden lg:block w-64 shrink-0">
+                    <div className="space-y-4">
+                        <Skeleton className="h-8 w-32 mb-6" />
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-3/4" />
+                        <Skeleton className="h-5 w-5/6" />
+                    </div>
+                </aside>
+                <div className="flex-1 min-w-0">
+                    <div className="flex justify-between items-center mb-8 pb-4 border-b">
+                        <Skeleton className="h-5 w-32" />
+                        <Skeleton className="h-9 w-44" />
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10 sm:gap-x-6 sm:gap-y-12">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                            <div key={i} className="flex flex-col h-full">
+                                <Skeleton className="aspect-square rounded-lg mb-3" />
+                                <Skeleton className="h-3 w-20 mb-2" />
+                                <Skeleton className="h-4 w-full mb-1" />
+                                <Skeleton className="h-4 w-16" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        }>
             <CollectionLayoutInner {...props} />
         </React.Suspense>
     )

@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.env*.local
+
+# test & debug scripts
+test-*.js
+test-*.mjs
+test-*.ts
+temp.mjs
+query-*.js
+query-*.ts
+create-storefront-token.js
+get-token.js

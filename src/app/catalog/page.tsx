@@ -47,6 +47,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
                 </div>
             ) : (
                 <CollectionLayout
+                    key={searchQuery || 'catalog'}
                     initialProducts={products}
                     initialPageInfo={pageInfo}
                     searchQuery={searchQuery || undefined}
