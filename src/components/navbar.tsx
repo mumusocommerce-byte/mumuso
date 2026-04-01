@@ -43,7 +43,7 @@ const megaMenuItems = [
             { title: "Kitchenware", handle: "kitchen-dining" },
             { title: "Household Essentials", handle: "home-living" },
             { title: "Storage", handle: "storage" },
-            { title: "Fragrances & Diffusers", handle: "diffuser" },
+            { title: "Fragrances & Diffusers", handle: "scent-air-freshener" },
         ]
     },
     {
