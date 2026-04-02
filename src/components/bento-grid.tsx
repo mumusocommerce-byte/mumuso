@@ -14,7 +14,7 @@ const bentoItems = [
         desc: "Upgrade your space with our latest arrivals in home decor and lifestyle essentials.",
         linkText: "Shop Collection",
         href: "/catalog",
-        image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80",
+        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/HOME-_-LIVING_044c6b86-1ee4-414b-9329-1f07223d440a.jpg?v=1775127018",
         titleSize: "text-3xl",
     },
     {
