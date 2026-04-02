@@ -11,7 +11,6 @@ const bentoItems = [
     {
         id: "modern-living",
         title: "Modern Living",
-        desc: "Upgrade your space with our latest arrivals in home decor and lifestyle essentials.",
         linkText: "Shop Collection",
         href: "/catalog",
         image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/HOME-_-LIVING_044c6b86-1ee4-414b-9329-1f07223d440a.jpg?v=1775127018",
