@@ -2,7 +2,9 @@ import { notFound } from "next/navigation"
 import { getCollectionProductsPage } from "@/lib/shopify-queries"
 import { CollectionLayout } from "@/components/collection-layout"
 
-// We rely on next: { revalidate: 30 } at the fetch layer for fresh data,
+export const revalidate = 300
+
+// We rely on next: { revalidate: 300 } at the fetch layer for fresh data,
 // so we don't need to force-dynamic which slows down navigation heavily.
 interface CategoryPageProps {
     params: Promise<{
@@ -12,7 +14,6 @@ interface CategoryPageProps {
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
     const { category } = await params
-    console.log("[CategoryPage] Fetching collection:", category)
 
     const collection = await getCollectionProductsPage(category, 30)
 
@@ -20,8 +21,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         console.error("[CategoryPage] Collection not found for handle:", category)
         notFound()
     }
-
-    console.log("[CategoryPage] Found", collection.products.length, "products in", collection.title)
 
     return (
         <div className="container mx-auto px-6 md:px-8 py-16 md:py-20">
