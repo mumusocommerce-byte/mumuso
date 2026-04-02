@@ -28,9 +28,6 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
                         }
                     </p>
                 </div>
-                <p className="text-sm font-medium text-muted-foreground whitespace-nowrap">
-                    {products.length} Products
-                </p>
             </div>
 
             {products.length === 0 ? (

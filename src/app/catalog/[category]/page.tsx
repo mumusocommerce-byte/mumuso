@@ -35,9 +35,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         dangerouslySetInnerHTML={{ __html: collection.description || "Explore curated items in this collection." }}
                     />
                 </div>
-                <p className="text-sm font-medium text-muted-foreground whitespace-nowrap">
-                    {collection.products.length} Products
-                </p>
             </div>
 
             {collection.products.length === 0 ? (
