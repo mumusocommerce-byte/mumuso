@@ -76,7 +76,8 @@ export async function POST(request: Request) {
             name: author,
             rating: rating,
             title: title || "Review via Storefront",
-            body: content
+            body: content,
+            api_token: PRIVATE_TOKEN,
         };
 
         const res = await fetch(`https://judge.me/api/v1/reviews`, {
