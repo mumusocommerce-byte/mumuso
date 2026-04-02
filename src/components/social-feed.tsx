@@ -47,12 +47,12 @@ function SocialCard({ post }: { post: PostDisplay }) {
             className="block rounded-xl overflow-hidden bg-card border shadow-sm group mb-4"
         >
             <div className="relative aspect-square overflow-hidden">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                     src={post.image}
                     alt={`${post.username} post`}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    sizes="(max-width: 640px) 50vw, 25vw"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
                 />
             </div>
             <div className="flex items-center justify-between px-3 py-2.5">
