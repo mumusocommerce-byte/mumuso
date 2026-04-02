@@ -69,12 +69,12 @@ export default function CartPage() {
                                 className="rounded-xl border bg-card p-5 flex flex-col sm:flex-row gap-5"
                             >
                                 {/* Image */}
-                                <div className="relative w-full sm:w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden bg-muted">
+                                <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 rounded-lg overflow-hidden bg-muted mx-auto sm:mx-0">
                                     <Image
                                         src={item.image}
                                         alt={item.title}
                                         fill
-                                        className="object-cover"
+                                        className="object-contain p-1"
                                         sizes="112px"
                                     />
                                 </div>
