@@ -50,3 +50,7 @@ query-*.js
 query-*.ts
 create-storefront-token.js
 get-token.js
+
+# Environment files
+.env.local
+.env*.local

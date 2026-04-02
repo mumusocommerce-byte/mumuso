@@ -5,79 +5,43 @@ import Image from "next/image"
 import Link from "next/link"
 import { Instagram } from "lucide-react"
 
-// Placeholder posts using real Mumuso product images as social content
-// These will be replaced with actual Instagram feed data
-const socialPosts = [
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/BEAUTY_SKINCARE.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/MAKEUP-_-PERFUME.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/HAIR-_-NAIL-CARE.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/KITCHENWARE.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/TOYS_7aac0ad2-c1ca-42d1-a2ea-3d0d5dce589d.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/HOUSEHOLD-ESSENTIALS.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/FRAGRANCES-_-DIFFUSERS.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/PET-SUPPLIES.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/STORAGE.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/STATIONERY_d2daf697-7683-4cfb-b4e1-d5652591754c.jpg?v=1773312468",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/ELECTRONICS_2dab8a1c-2d5c-4fd5-bb68-6eb52820c9f2.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/FASHION-_-APPAREL.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/BEAUTY-MASKS.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/DENTAL-CARE.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/PURSES-_-BAGS.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
-    {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/BEAUTY_SKINCARE.jpg?v=1773312467",
-        username: "@mumuso_me",
-    },
+// Fallback posts using Shopify CDN images
+const fallbackPosts = [
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/BEAUTY_SKINCARE.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/MAKEUP-_-PERFUME.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/HAIR-_-NAIL-CARE.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/KITCHENWARE.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/TOYS_7aac0ad2-c1ca-42d1-a2ea-3d0d5dce589d.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/HOUSEHOLD-ESSENTIALS.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/FRAGRANCES-_-DIFFUSERS.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/PET-SUPPLIES.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/STORAGE.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/STATIONERY_d2daf697-7683-4cfb-b4e1-d5652591754c.jpg?v=1773312468",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/ELECTRONICS_2dab8a1c-2d5c-4fd5-bb68-6eb52820c9f2.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/FASHION-_-APPAREL.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/BEAUTY-MASKS.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/DENTAL-CARE.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/PURSES-_-BAGS.jpg?v=1773312467",
+    "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/BEAUTY_SKINCARE.jpg?v=1773312467",
 ]
 
-function SocialCard({ post }: { post: typeof socialPosts[0] }) {
+interface InstagramPost {
+    id: string
+    mediaUrl: string
+    permalink: string
+    timestamp: string
+}
+
+interface PostDisplay {
+    image: string
+    permalink: string
+    username: string
+}
+
+function SocialCard({ post }: { post: PostDisplay }) {
     return (
         <Link
-            href="https://www.instagram.com/mumuso_me/"
+            href={post.permalink}
             target="_blank"
             rel="noopener noreferrer"
             className="block rounded-xl overflow-hidden bg-card border shadow-sm group mb-4"
@@ -109,7 +73,7 @@ function MarqueeColumn({
     direction = "up",
     speed = 30,
 }: {
-    posts: typeof socialPosts
+    posts: PostDisplay[]
     direction?: "up" | "down"
     speed?: number
 }) {
@@ -125,7 +89,7 @@ function MarqueeColumn({
                 }}
             >
                 {allPosts.map((post, i) => (
-                    <SocialCard key={`${post.username}-${i}`} post={post} />
+                    <SocialCard key={`${post.permalink}-${i}`} post={post} />
                 ))}
             </div>
         </div>
@@ -133,11 +97,69 @@ function MarqueeColumn({
 }
 
 export function SocialFeed() {
+    const [posts, setPosts] = React.useState<PostDisplay[]>([])
+    const [isLoaded, setIsLoaded] = React.useState(false)
+
+    React.useEffect(() => {
+        async function fetchInstagramPosts() {
+            try {
+                const res = await fetch("/api/instagram")
+                if (!res.ok) throw new Error("Failed to fetch")
+
+                const data = await res.json()
+
+                if (data.posts && data.posts.length > 0) {
+                    const igPosts: PostDisplay[] = data.posts.map(
+                        (p: InstagramPost) => ({
+                            image: p.mediaUrl,
+                            permalink: p.permalink,
+                            username: "@mumuso_me",
+                        })
+                    )
+                    setPosts(igPosts)
+                } else {
+                    // Use fallback
+                    setPosts(
+                        fallbackPosts.map((img) => ({
+                            image: img,
+                            permalink: "https://www.instagram.com/mumuso_me/",
+                            username: "@mumuso_me",
+                        }))
+                    )
+                }
+            } catch (error) {
+                console.error("Error fetching Instagram posts:", error)
+                // Use fallback on error
+                setPosts(
+                    fallbackPosts.map((img) => ({
+                        image: img,
+                        permalink: "https://www.instagram.com/mumuso_me/",
+                        username: "@mumuso_me",
+                    }))
+                )
+            } finally {
+                setIsLoaded(true)
+            }
+        }
+
+        fetchInstagramPosts()
+    }, [])
+
+    // Show fallback while loading
+    const displayPosts =
+        posts.length > 0
+            ? posts
+            : fallbackPosts.map((img) => ({
+                  image: img,
+                  permalink: "https://www.instagram.com/mumuso_me/",
+                  username: "@mumuso_me",
+              }))
+
     // Distribute posts across 4 columns
-    const col1 = socialPosts.filter((_, i) => i % 4 === 0)
-    const col2 = socialPosts.filter((_, i) => i % 4 === 1)
-    const col3 = socialPosts.filter((_, i) => i % 4 === 2)
-    const col4 = socialPosts.filter((_, i) => i % 4 === 3)
+    const col1 = displayPosts.filter((_, i) => i % 4 === 0)
+    const col2 = displayPosts.filter((_, i) => i % 4 === 1)
+    const col3 = displayPosts.filter((_, i) => i % 4 === 2)
+    const col4 = displayPosts.filter((_, i) => i % 4 === 3)
 
     return (
         <section className="py-16 md:py-20">
