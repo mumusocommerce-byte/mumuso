@@ -13,7 +13,7 @@ interface SearchPanelProps {
     onClose: () => void;
 }
 
-const TRENDING = ["Skincare", "Storage", "Toys", "Tumbler", "Perfume", "Backpack"]
+const TRENDING = ["Skin care", "Storage", "Toys", "Tumbler", "Perfume", "Backpack"]
 const SUGGESTIONS = ["Beauty Masks", "Water Bottle", "Backpack", "Desk Organizer", "Cushion", "Lip Balm", "Face Wash", "Sunglasses"]
 
 export function SearchPanel({ isOpen, onClose }: SearchPanelProps) {
@@ -117,7 +117,7 @@ export function SearchPanel({ isOpen, onClose }: SearchPanelProps) {
                                         <Sparkles className="h-4 w-4 text-primary" /> Popular Categories
                                     </h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
-                                        {[{ title: "Beauty & Skin Care", href: "beauty-skin-care" }, { title: "Kitchenware", href: "kitchenware" }, { title: "Stationery", href: "stationery" }, { title: "Home Living", href: "household-essentials" }].map(cat => (
+                                        {[{ title: "Beauty & Skin Care", href: "beauty-clean" }, { title: "Kitchenware", href: "kitchen-dining" }, { title: "Stationery", href: "stationary" }, { title: "Home Living", href: "home-living" }].map(cat => (
                                             <Link
                                                 key={cat.href}
                                                 href={`/catalog/${cat.href}`}
