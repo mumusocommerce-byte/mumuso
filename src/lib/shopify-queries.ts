@@ -190,7 +190,7 @@ export const getCollectionProducts = async (handle: string, limit = 10, fetchAll
     while (activeProducts.length < needed && hasMore) {
       const fetchResult: any = await shopifyFetch<any>({
         query,
-        variables: { handle, first: 250, after: currentCursor },
+        variables: { handle, first: 50, after: currentCursor },
       });
       const responseBody = fetchResult.body;
 
@@ -317,7 +317,7 @@ export const getCollectionProductsPage = async (handle: string, limit = 30, curs
     while (activeProducts.length < limit && hasMore) {
       const { body } = await shopifyFetch<any>({
         query,
-        variables: { handle, first: 250, after: currentCursor }
+        variables: { handle, first: 50, after: currentCursor }
       });
 
       if (!body?.data?.collectionByHandle?.products) {

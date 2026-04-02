@@ -24,7 +24,7 @@ export async function shopifyFetch<T>({
                 ...(query && { query }),
                 ...(variables && { variables }),
             }),
-            next: { revalidate: 30 },
+            next: { revalidate: 300 },
         });
 
         const body = await result.json();

@@ -23,26 +23,19 @@ import {
 } from "@/components/ui/carousel"
 
 interface HomeClientProps {
-    products: Product[]
+    bestSellers: Product[]
+    newArrivals: Product[]
 }
 
-export default function HomeClient({ products }: HomeClientProps) {
-    const displayProducts = products.length > 0 ? products : []
-
-    const bestSellers = displayProducts.slice(0, 10)
-    const newArrivals =
-        displayProducts.slice(10, 20).length > 0
-            ? displayProducts.slice(10, 20)
-            : bestSellers
-
-    if (displayProducts.length === 0) {
+export default function HomeClient({ bestSellers, newArrivals }: HomeClientProps) {
+    if (bestSellers.length === 0 && newArrivals.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
                 <h1 className="text-2xl font-semibold tracking-tight mb-2">
                     No Products Found
                 </h1>
                 <p className="text-sm text-muted-foreground max-w-md">
-                    We couldn't load any products from your Shopify store. Please check
+                    We couldn&apos;t load any products from your Shopify store. Please check
                     your API credentials and try again.
                 </p>
             </div>
