@@ -112,8 +112,7 @@ export function FulfillmentInfo({ variantId }: FulfillmentInfoProps) {
             {/* Click & Collect with Store Inventory */}
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
                 <div className="rounded-xl border bg-card hover:border-primary/30 transition-all duration-300 overflow-hidden">
-                    <CollapsibleTrigger asChild>
-                        <button className="flex items-start gap-4 p-4 w-full text-left group">
+                    <CollapsibleTrigger className="flex items-start gap-4 p-4 w-full text-left group cursor-pointer">
                             <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-muted group-hover:bg-primary/10 transition-colors duration-300 shrink-0">
                                 <PackageCheck className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                             </div>
@@ -134,7 +133,6 @@ export function FulfillmentInfo({ variantId }: FulfillmentInfoProps) {
                                     )} />
                                 </span>
                             </div>
-                        </button>
                     </CollapsibleTrigger>
 
                     <CollapsibleContent>
