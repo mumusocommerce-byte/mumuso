@@ -54,7 +54,7 @@ export default function HomeClient({ products }: HomeClientProps) {
             {/* ── Hero Banner ─────────────────────────────────────────── */}
             <section className="relative w-full h-[70vh] min-h-[500px] overflow-hidden">
                 <Image
-                    src="https://cdn.shopify.com/s/files/1/0511/6906/7163/files/Summer_50d6f993-64db-41a2-9a1b-f56b960adc62.jpg?v=1773686682"
+                    src="https://cdn.shopify.com/s/files/1/0511/6906/7163/files/Image_20260402154408_1_27_1.jpg?v=1775130676"
                     alt="Hero Banner"
                     fill
                     className="object-cover object-center"
