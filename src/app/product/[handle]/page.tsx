@@ -67,7 +67,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     <TabbyPromo price={productPrice} currency="AED" />
 
                     {/* Fulfillment Options */}
-                    <FulfillmentInfo />
+                    <FulfillmentInfo variantId={product.variants[0]?.id} />
 
                     <Separator className="my-8" />
 

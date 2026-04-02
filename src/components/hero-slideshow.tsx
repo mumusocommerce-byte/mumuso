@@ -19,19 +19,19 @@ interface Slide {
 
 const slides: Slide[] = [
     {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/sample1.jpg?v=1773393214",
+        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/SUMMER_COLLECTION_158e6806-4c86-4195-bddd-e284eb1296de.jpg?v=1775137603",
         title: "Summer Collection 2026",
         subtitle: "Fresh arrivals to brighten your everyday life with style and comfort.",
         cta: { label: "Shop Now", href: "/catalog/new-mumuso-lifestyle" },
     },
     {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/sample2.jpg?v=1773393214",
+        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/BEAUTY_ESSENTIALS.jpg?v=1775137602",
         title: "Beauty Essentials",
         subtitle: "Discover skincare and beauty products crafted for your daily routine.",
         cta: { label: "Explore", href: "/catalog" },
     },
     {
-        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/sample3.jpg?v=1773393214",
+        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/HOME-_-LIVING2.jpg?v=1775137602",
         title: "Home & Living",
         subtitle: "Transform your space with our curated home accessories collection.",
         cta: { label: "View Collection", href: "/catalog" },

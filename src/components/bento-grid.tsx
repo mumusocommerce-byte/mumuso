@@ -32,7 +32,7 @@ const bentoItems = [
         desc: "",
         linkText: "Shop Accessories",
         href: "/catalog",
-        image: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=800&q=80",
+        image: "https://cdn.shopify.com/s/files/1/0511/6906/7163/files/EVERYDAY_CARRY.jpg?v=1775137602",
         titleSize: "text-xl",
     }
 ]
