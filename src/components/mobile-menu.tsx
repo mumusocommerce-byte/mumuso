@@ -105,13 +105,13 @@ export function MobileMenu({ megaMenuItems, isLoggedIn }: MobileMenuProps) {
                                 <div className="flex flex-col pl-1">
                                     {megaMenuItems.map((section) => (
                                         <div key={section.handle} className="mb-3">
-                                            <p className="text-[13px] font-semibold capitalize tracking-wide text-muted-foreground mb-1.5">{section.title}</p>
+                                            <p className="text-[15px] font-semibold capitalize tracking-wide text-muted-foreground mb-1.5">{section.title}</p>
                                             {section.subCategories.map((item) => (
                                                 <Link
                                                     key={item.handle}
                                                     href={`/catalog/${item.handle}`}
                                                     onClick={() => setIsOpen(false)}
-                                                    className="block py-1.5 text-[15px] text-foreground/80 hover:text-primary transition-colors"
+                                                    className="block py-1.5 text-[13px] text-foreground/80 hover:text-primary transition-colors"
                                                 >
                                                     {item.title}
                                                 </Link>

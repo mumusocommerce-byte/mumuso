@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 
 const SHOPIFY_STORE_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!;
 const SHOPIFY_ACCESS_TOKEN = process.env.SHOPIFY_ACCESS_TOKEN!;
+// Use custom domain for checkout URLs so customers stay on the same domain.
+// Set SHOPIFY_CHECKOUT_DOMAIN in .env to your custom domain (e.g., "mumuso.ae").
+// Falls back to the myshopify.com domain if not set.
+const CHECKOUT_DOMAIN = process.env.SHOPIFY_CHECKOUT_DOMAIN || SHOPIFY_STORE_DOMAIN;
 
 const ADMIN_GRAPHQL_URL = `https://${SHOPIFY_STORE_DOMAIN}/admin/api/2024-01/graphql.json`;
 
@@ -63,7 +67,7 @@ export async function POST(request: Request) {
 
         // Build the cart permalink: /cart/variant_id:qty,variant_id:qty
         const cartPath = lineItemParts.join(",");
-        const checkoutUrl = `https://${SHOPIFY_STORE_DOMAIN}/cart/${cartPath}`;
+        const checkoutUrl = `https://${CHECKOUT_DOMAIN}/cart/${cartPath}`;
 
         return NextResponse.json({ checkoutUrl });
     } catch (error) {
