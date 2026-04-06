@@ -103,8 +103,8 @@ export function MobileMenu({ megaMenuItems, isLoggedIn }: MobileMenuProps) {
                             {/* Shop section */}
                             <CollapsibleSection title="Shop" defaultOpen>
                                 <div className="flex flex-col pl-1">
-                                    {megaMenuItems.map((section) => (
-                                        <div key={section.handle} className="mb-3">
+                                    {megaMenuItems.map((section, index) => (
+                                        <div key={section.handle} className={`mb-3 pb-3 ${index < megaMenuItems.length - 1 ? "border-b border-border/30" : ""}`}>
                                             <p className="text-[15px] font-semibold capitalize tracking-wide text-muted-foreground mb-1.5">{section.title}</p>
                                             {section.subCategories.map((item) => (
                                                 <Link
