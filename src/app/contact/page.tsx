@@ -233,6 +233,7 @@ export default function ContactPage() {
                                                     <p className="text-sm font-semibold leading-snug truncate group-hover:text-primary transition-colors">
                                                         {store.mall}
                                                     </p>
+                                                    {store.phone ? (
                                                     <div className="flex items-center gap-1.5 mt-2">
                                                         <Phone className="h-3 w-3 text-muted-foreground shrink-0" />
                                                         <a
@@ -242,6 +243,9 @@ export default function ContactPage() {
                                                             {store.phone}
                                                         </a>
                                                     </div>
+                                                    ) : (
+                                                    <p className="text-xs text-muted-foreground mt-2">No landline</p>
+                                                    )}
                                                 </div>
                                                 <a
                                                     href={`https://www.google.com/maps/search/Mumuso+${encodeURIComponent(store.mall)}+${encodeURIComponent(store.emirate)}+UAE`}
