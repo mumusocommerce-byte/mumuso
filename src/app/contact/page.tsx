@@ -247,7 +247,7 @@ export default function ContactPage() {
                                                     href={`https://www.google.com/maps/search/Mumuso+${encodeURIComponent(store.mall)}+${encodeURIComponent(store.emirate)}+UAE`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                    className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
                                                     title="Open in Google Maps"
                                                 >
                                                     <ExternalLink className="h-3.5 w-3.5 text-primary" />
