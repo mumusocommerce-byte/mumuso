@@ -105,7 +105,7 @@ export function MobileMenu({ megaMenuItems, isLoggedIn }: MobileMenuProps) {
                                 <div className="flex flex-col pl-1">
                                     {megaMenuItems.map((section) => (
                                         <div key={section.handle} className="mb-3">
-                                            <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1.5">{section.title}</p>
+                                            <p className="text-[13px] font-semibold capitalize tracking-wide text-muted-foreground mb-1.5">{section.title}</p>
                                             {section.subCategories.map((item) => (
                                                 <Link
                                                     key={item.handle}

@@ -124,7 +124,7 @@ export function Footer() {
                 <Separator className="my-8" />
 
                 <p className="text-xs text-muted-foreground text-center">
-                    &copy; {new Date().getFullYear()} STOREFRONT. All rights reserved.
+                    &copy; {new Date().getFullYear()} Mumuso. All rights reserved.
                 </p>
             </div>
         </footer>
