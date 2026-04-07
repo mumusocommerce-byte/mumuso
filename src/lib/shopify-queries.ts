@@ -289,6 +289,14 @@ export const getCollectionProductsPage = async (handle: string, limit = 30, curs
       collectionByHandle(handle: $handle) {
         title
         descriptionHtml
+        seo {
+          title
+          description
+        }
+        image {
+          url
+          altText
+        }
         products(first: $first, after: $after) {
           pageInfo {
             hasNextPage
@@ -311,6 +319,8 @@ export const getCollectionProductsPage = async (handle: string, limit = 30, curs
     let hasMore = true;
     let title = "";
     let description = "";
+    let seoData: any = null;
+    let imageData: any = null;
 
     // Paginate through the collection (newest first = default sort),
     // skipping DRAFT products until we have enough ACTIVE ones
@@ -329,6 +339,8 @@ export const getCollectionProductsPage = async (handle: string, limit = 30, curs
 
       title = body.data.collectionByHandle.title;
       description = body.data.collectionByHandle.descriptionHtml;
+      seoData = body.data.collectionByHandle.seo;
+      imageData = body.data.collectionByHandle.image;
 
       const edges = body.data.collectionByHandle.products.edges;
       const activeFromBatch = edges.filter(({ node }: any) => node.status === 'ACTIVE');
@@ -345,6 +357,8 @@ export const getCollectionProductsPage = async (handle: string, limit = 30, curs
     return {
       title,
       description,
+      seo: seoData || { title: null, description: null },
+      image: imageData?.url || null,
       products,
       pageInfo: {
         hasNextPage: activeProducts.length > limit || hasMore,
@@ -365,6 +379,10 @@ export const getProductByHandle = async (handle: string) => {
         handle
         status
         descriptionHtml
+        seo {
+          title
+          description
+        }
         variants(first: 100) {
           edges {
             node {
@@ -415,6 +433,7 @@ export const getProductByHandle = async (handle: string) => {
       title: p.title,
       handle: p.handle,
       descriptionHtml: p.descriptionHtml,
+      seo: p.seo || { title: null, description: null },
       variants: p.variants.edges.map(({ node }: any) => ({
         id: node.id,
         title: node.title,

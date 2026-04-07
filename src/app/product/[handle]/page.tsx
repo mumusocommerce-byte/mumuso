@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { Metadata } from "next"
 import { getProductByHandle } from "@/lib/shopify-queries"
 import { ProductGallery } from "@/components/product-gallery"
 import { ProductForm } from "@/components/product-form"
@@ -14,6 +15,34 @@ import { ChevronRight } from "lucide-react"
 interface ProductPageProps {
     params: {
         handle: string
+    }
+}
+
+function stripHtml(html: string): string {
+    return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()
+}
+
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+    const handle = (await params).handle
+    const product = await getProductByHandle(handle)
+
+    if (!product) {
+        return { title: "Product Not Found" }
+    }
+
+    const seoTitle = product.seo?.title || product.title
+    const seoDescription = product.seo?.description || stripHtml(product.descriptionHtml).slice(0, 160)
+    const productImage = product.images?.[0]?.url
+
+    return {
+        title: seoTitle,
+        description: seoDescription,
+        openGraph: {
+            title: `${seoTitle} | Mumuso`,
+            description: seoDescription,
+            type: "website",
+            ...(productImage && { images: [{ url: productImage, width: 800, height: 800, alt: product.title }] }),
+        },
     }
 }
 

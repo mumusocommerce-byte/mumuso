@@ -1,15 +1,41 @@
 import { notFound } from "next/navigation"
+import { Metadata } from "next"
 import { getCollectionProductsPage } from "@/lib/shopify-queries"
 import { CollectionLayout } from "@/components/collection-layout"
 
 export const revalidate = 300
 
-// We rely on next: { revalidate: 300 } at the fetch layer for fresh data,
-// so we don't need to force-dynamic which slows down navigation heavily.
 interface CategoryPageProps {
     params: Promise<{
         category: string
     }>
+}
+
+function stripHtml(html: string): string {
+    return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim()
+}
+
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+    const { category } = await params
+    const collection = await getCollectionProductsPage(category, 1)
+
+    if (!collection || !collection.title) {
+        return { title: "Collection Not Found" }
+    }
+
+    const seoTitle = collection.seo?.title || collection.title
+    const seoDescription = collection.seo?.description || stripHtml(collection.description || "").slice(0, 160) || `Shop ${collection.title} at Mumuso UAE`
+
+    return {
+        title: seoTitle,
+        description: seoDescription,
+        openGraph: {
+            title: `${seoTitle} | Mumuso`,
+            description: seoDescription,
+            type: "website",
+            ...(collection.image && { images: [{ url: collection.image, width: 1200, height: 630, alt: collection.title }] }),
+        },
+    }
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

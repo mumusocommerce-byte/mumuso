@@ -1,8 +1,26 @@
+import { Metadata } from "next"
 import { getProductsPage, searchProductsPage } from "@/lib/shopify-queries"
 import { CollectionLayout } from "@/components/collection-layout"
 
 interface CatalogPageProps {
     searchParams: Promise<{ q?: string }>;
+}
+
+export async function generateMetadata({ searchParams }: CatalogPageProps): Promise<Metadata> {
+    const params = await searchParams;
+    const searchQuery = params.q?.trim() || "";
+
+    if (searchQuery) {
+        return {
+            title: `Search: ${searchQuery}`,
+            description: `Search results for "${searchQuery}" at Mumuso UAE.`,
+        }
+    }
+
+    return {
+        title: "All Products",
+        description: "Explore our complete collection of curated lifestyle essentials designed for modern living at Mumuso UAE.",
+    }
 }
 
 export default async function CatalogPage({ searchParams }: CatalogPageProps) {
