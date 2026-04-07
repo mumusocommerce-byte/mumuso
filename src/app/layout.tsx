@@ -9,8 +9,15 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Storefront",
-  description: "Premium Lifestyle Storefront",
+  title: {
+    default: "Mumuso",
+    template: "%s | Mumuso",
+  },
+  description: "Your premium destination for curated lifestyle products.",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 import { ThemeProvider } from "@/components/theme-provider";
